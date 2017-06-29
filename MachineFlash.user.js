@@ -3,9 +3,10 @@
 // @namespace    http://www.forsu.cn/
 // @version      0.3
 // @description  try to take over the world!
-// @author       You
+// @author       fpk2014
 // @match        http://210.39.2.59:8081/web.equipmentBooking/web/book*
-
+// @updateURL    https://raw.githubusercontent.com/fpk2014/MachineFlash/master/MachineFlash.user.js
+// @downloadURL  https://raw.githubusercontent.com/fpk2014/MachineFlash/master/MachineFlash.user.js
 // @require  http://crypto.stanford.edu/sjcl/sjcl.js
 // @grant    GM_getValue
 // @grant    GM_setValue
@@ -17,12 +18,10 @@ var yourJob     = GM_getValue ("lognUsr", "");
 var yourID   = GM_getValue ("lognPwd", "");
 
 if ( ! encKey) {
-    /*
     encKey  = prompt (
         'Script key not set for ' + location.hostname + '. Please enter a random string:',
         ''
     );
-    */
     GM_setValue ("encKey", encKey);
     yourJob     = yourID = "";   // New key makes prev stored values (if any) unable to decode.
 }
@@ -70,15 +69,6 @@ function promptAndChangeStoredValue (targVar, userPrompt, setValVarName) {
     );
     GM_setValue (setValVarName, encryptAndStore (targVar) );
 }
-
-
-
-
-
-
-
-
-
 
 
 var myurl = window.location.href;
@@ -366,7 +356,7 @@ async function allProcess() {
             }
 
             await sleep(waitLoadTime);  //等待加载完成
-            if(clickTime(idealtime)===true){return;}  //寻找特点时间点的机器
+            //if(clickTime(idealtime)===true){return;}  //寻找特点时间点的机器
             if(findUseful()===true){return;}
         }
 
@@ -397,3 +387,4 @@ function test(){
     clickMachine(machineNum);  //选择几号机器
     clickFinalDay();  //选择最后一天
 }
+
