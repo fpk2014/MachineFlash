@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         MachineFlash
 // @namespace    https://github.com/fpk2014
-// @version      0.6
+// @version      0.5
 // @description  激切抢预约，自用脚本
 // @author       fpk2014
 // @match        http://210.39.2.59:8081/web.equipmentBooking/web/book*
@@ -17,7 +17,6 @@
 var myurl = window.location.href;
 var FLASH_TIME = 200;                      //刷新网页时间，单位：ms
 var WAIT_LOAD_TIME = 200;                  //等待预约界面加载完全，如果延迟过大，必须调整该值，单位：ms
-var CLICK_TIME = 100
 var Find_ONE_USEFUL_MACHINE_TIME = 200;    //切换到下一台机器的时间，单位：ms
 var MACHINE_NUMBER = 4;                    //机器数量
 var PRINT_LOG = true;
@@ -163,18 +162,6 @@ function Click_Final_Day(myElement, myProperty){
     }
 }
 
-
-//填入作业名称或手机号
-function Input_Name_Or_PhoneID(myElement, myProperty, myValue, value_reg, value){
-    var _my= Get_Right_Item(myElement, myProperty, myValue);
-    if (_my === 0){
-        //Print("get machine false");
-        window.location.reload();
-    }else{
-        _my.setAttribute(value_reg, value);
-    }
-}
-
 //选择特定的时间段
 function Click_Time(myElement, myProperty, myValue, time_reg, time){
     var realTime;
@@ -260,7 +247,7 @@ function Find_Useful(myElement, myProperty, myValue){
         if (thisUseful.getAttribute(myProperty).indexOf(myValue) != -1) {
             Print("found useful!!!Choose!!!");
             thisUseful.click();
-            return thisUseful;
+            return true;
         }
         i++;
     }
@@ -319,12 +306,12 @@ async function All_Process() {
 
             Print("test machine "+i);
             Click_Machine('a',       "name", i).click();                                             //选择i号机器
-            await Sleep(CLICK_TIME*i);  //等待加载完成
+            await Sleep(WAIT_LOAD_TIME*i);  //等待加载完成
             Click_Final_Day('li',    "onclick").click();                                             //选择最后一天
-            await Sleep(CLICK_TIME*i); //等待加载完成
+            await Sleep(WAIT_LOAD_TIME*i); //等待加载完成
 
             if(button.innerHTML==="Start"){return;}
-            if(Find_Useful('a',  "class", "no_subscribe")===true){return;}                           //寻找可用的机器
+            if(Find_Useful('a',  "class", "no_subscribe")){return;}                           //寻找可用的机器
         } 
 
         //- - 找不到可用的机器，重新加载 - -//
