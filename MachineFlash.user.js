@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         MachineFlash
 // @namespace    https://github.com/fpk2014
-// @version      0.5
+// @version      0.6
 // @description  激切抢预约，自用脚本
 // @author       fpk2014
 // @match        http://210.39.2.59:8081/web.equipmentBooking/web/book*
@@ -19,7 +19,7 @@ var FLASH_TIME = 200;                      //刷新网页时间，单位：ms
 var WAIT_LOAD_TIME = 200;                  //等待预约界面加载完全，如果延迟过大，必须调整该值，单位：ms
 var Find_ONE_USEFUL_MACHINE_TIME = 200;    //切换到下一台机器的时间，单位：ms
 var MACHINE_NUMBER = 4;                    //机器数量
-var PRINT_LOG = true;
+var PRINT_LOG = false;
 function Print(name){
     if(PRINT_LOG)
         console.log(name);
