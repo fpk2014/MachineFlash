@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         MachineFlash
 // @namespace    https://github.com/fpk2014
-// @version      0.9
+// @version      0.10
 // @description  激切抢预约，自用脚本
 // @author       fpk2014
 // @match        http://210.39.2.59:8081/web.equipmentBooking/web/book*
