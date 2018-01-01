@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         MachineFlash
 // @namespace    https://github.com/fpk2014
-// @version      0.8
+// @version      0.9
 // @description  激切抢预约，自用脚本
 // @author       fpk2014
 // @match        http://210.39.2.59:8081/web.equipmentBooking/web/book*
@@ -31,16 +31,13 @@ if (!encKey) {
     //encKey  = prompt ('Script key not set for ' + location.hostname + '. Please enter a random string:','');
     GM_setValue ("encKey", "machineflash");
 }
-function decodeOrPrompt (targVar, userPrompt, setValVarName) {
+function decodeOrPrompt (targVar, userPrompt, setValVarName, varname="") {
     if (targVar) {
         targVar     = unStoreAndDecrypt (targVar);
     }
     else {
-        targVar     = prompt (
-            userPrompt + ' not set for ' + location.hostname + '. Please enter it now:',
-            ''
-        );
-        GM_setValue (setValVarName, encryptAndStore (targVar) );
+		targVar     = prompt (varname,'');
+        GM_setValue (varname, encryptAndStore(encKey) );
     }
     return targVar;
 }
@@ -64,12 +61,12 @@ function promptAndChangeStoredValue (targVar, userPrompt, setValVarName) {
     GM_setValue (setValVarName, encryptAndStore (targVar) );
 }
 
-function Save_Data(varname, proverty, detail, defaults=""){
+function Get_Data(varname, proverty, detail, defaults=""){
     var tmp = GM_getValue(varname);
     GM_registerMenuCommand (proverty, function(){
         promptAndChangeStoredValue (tmp,   detail, varname);
     });
-    tmp = decodeOrPrompt(tmp,      defaults, detail);
+    tmp = decodeOrPrompt(tmp,      defaults, detail, varname);
     return tmp;
 }
 
@@ -232,12 +229,12 @@ button.addEventListener ("click", function() {
     }
 });
 
-var YOUR_JOB      = Save_Data("loginUsr", "修改作业名称", "修改作业名称(格式为:XXXXXXXX作业)");
-var SUBMIT_DAY    = Save_Data("submitDay", "修改交作业日期", "修改交作业日期(格式为:XX月XX号)");
-var YOUR_ID       = Save_Data("yourID", "修改手机号码", "修改手机号码");
-var IDEAL_MACHINE = Save_Data("machineID", "修改机器号", "修改机器号");
-var IDEAL_TIME    = Save_Data("timeID", "修改机器时间点", "修改机器时间点(比如9点则输入9， 10点则输入10，依此类推)");
-var AUTO_SUBMIT   = Save_Data("autoSubmit", "自动提交", "如果需要自动提交预约申请，输入true，否则输入false");
+var YOUR_JOB      = Get_Data("loginUsr", "修改作业名称", "修改作业名称(格式为:XXXXXXXX作业)");
+var SUBMIT_DAY    = Get_Data("submitDay", "修改交作业日期", "修改交作业日期(格式为:XX月XX号)");
+var YOUR_ID       = Get_Data("yourID", "修改手机号码", "修改手机号码");
+var IDEAL_MACHINE = Get_Data("machineID", "修改机器号", "修改机器号");
+var IDEAL_TIME    = Get_Data("timeID", "修改机器时间点", "修改机器时间点(比如9点则输入9， 10点则输入10，依此类推)");
+var AUTO_SUBMIT   = Get_Data("autoSubmit", "自动提交", "如果需要自动提交预约申请，输入true，否则输入false");
 //Print("作业名称:" + YOUR_JOB + "  手机号码:" + YOUR_ID+ "  时间点:" + IDEAL_TIME+ "  机器号:" + IDEAL_MACHINE + " 自动提交: " + AUTO_SUBMIT);
 
 async function All_Process() {
