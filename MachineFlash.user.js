@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         MachineFlash
 // @namespace    https://github.com/fpk2014
-// @version      0.7
+// @version      0.8
 // @description  激切抢预约，自用脚本
 // @author       fpk2014
 // @match        http://210.39.2.59:8081/web.equipmentBooking/web/book*
@@ -16,7 +16,7 @@
 
 var myurl = window.location.href;
 var FLASH_TIME = 200;                      //刷新网页时间，单位：ms
-var WAIT_LOAD_TIME = 200;                  //等待等待加载完成时间，单位：ms
+var WAIT_LOAD_TIME = 100;                  //等待等待加载完成时间，单位：ms
 var Find_ONE_USEFUL_MACHINE_TIME = 200;    //切换到下一台机器的时间，单位：ms
 var MACHINE_NUMBER = 4;                    //机器数量
 var PRINT_LOG = false;
@@ -25,10 +25,11 @@ function Print(name, out = PRINT_LOG){
         console.log(name);
 }
 
+
 var encKey   = GM_getValue("encKey");
 if (!encKey) {
-    encKey  = prompt ('Script key not set for ' + location.hostname + '. Please enter a random string:','');
-    GM_setValue ("encKey", encKey);
+    //encKey  = prompt ('Script key not set for ' + location.hostname + '. Please enter a random string:','');
+    GM_setValue ("encKey", "machineflash");
 }
 function decodeOrPrompt (targVar, userPrompt, setValVarName) {
     if (targVar) {
